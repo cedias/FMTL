@@ -20,7 +20,7 @@ fmtl = FMTL(tl,{0:"id",1:"type",2:"num"}) #create the FMTL
 You can directly create a dictionnary of all your field's values and use it as a map.
 ```python
 map = fmtl.get_field_dict("id") #Creates mapping on id field
-fmtl.set_mapping("id",)  sets it
+fmtl.set_mapping("id",)  #sets it
 ```
 Mapping is done as iteration time
 ```python
