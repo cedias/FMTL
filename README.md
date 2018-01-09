@@ -1,5 +1,7 @@
 # FMTL: a Field-Mappable Tuple List
 
+FMTL provides a basic way to make data transformations.
+
 ## Requirements:
 
 - TQDM
