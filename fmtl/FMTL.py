@@ -10,9 +10,9 @@ class FMTL():
     """
 
     def __init__(self, tuplelist,rows=None):
-        if type(rows) is tuple or list:
+        if isinstance(rows,list) or isinstance(rows,tuple):
             rows = {x:i for i,x in enumerate(rows)}
-            
+
         self.tuplelist = tuplelist
         self.mappings = {}
         self.unknown = {}
