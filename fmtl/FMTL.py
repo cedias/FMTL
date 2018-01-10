@@ -35,7 +35,7 @@ class FMTL():
             t = list(self.tuplelist[index])
 
             for i,m in self.mappings.items():
-                if type(m) is dict:
+                if isinstance(m,dict):
                     t[i] = self._rec_apply(m.__getitem__,t[i],self.unknown.get(i))
                 else:
                     try:
