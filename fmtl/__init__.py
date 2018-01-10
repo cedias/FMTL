@@ -1,1 +1,1 @@
-from .FMTL import FMTL, FMTL_iterator
+from .FMTL import FMTL

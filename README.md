@@ -1,10 +1,6 @@
 # FMTL: a Field-Mappable Tuple List
 
-FMTL provides a basic way to make data transformations.
-
-## Requirements:
-
-- TQDM
+FMTL provides a basic way to make data transformations on Python 3(.6) tuple lists without pre-established dependencies.
 
 ## Install:
 via pip: `pip install -e git+https://github.com/cedias/FMTL.git`
@@ -22,7 +18,7 @@ First create the FMTL object:
 from fmtl import FMTL
 
 tl = [("id0",1,44),("id0",5,75),("id1",3,44)] #raw tuple list
-fmtl = FMTL(tl,{0:"id",1:"type",2:"num"}) #create the FMTL
+fmtl = FMTL(tl,{0:"id",1:"type",2:"num"}) #create the FMTL (rows can be a tuple or list)
 
 ```
 Then you can easily add functional mappings to fields with the `set_mapping(...)` method:
@@ -44,10 +40,11 @@ Mapping is done as iteration time in the object's `__get_item__()` method.
 list(fmtl) ==> [(0, 1, 44), (0, 5, 75), (1, 3, 44)] 
 list(fmtl.tuplelist) =>[('id0', 1, 44), ('id0', 5, 75), ('id1', 3, 44)]
 ```
-You can prebuild it explicitely.
+
+You still can prebuild it explicitely, it's just a list after all.
 ```python
 #persist mapping explicitely.
-builded = fmtl.prebuild()
-list(builded) => [(0, 1, 44), (0, 5, 75), (1, 3, 44)] 
-list(builded.tuplelist) => [(0, 1, 44), (0, 5, 75), (1, 3, 44)] 
+builded = list(fmtl) #if you don't have too much data
+builded = list(x for x in tqdm(fmtl)) #you can use tqdm to track progress if needed.
+builded => [(0, 1, 44), (0, 5, 75), (1, 3, 44)] 
 ```
