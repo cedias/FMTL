@@ -5,19 +5,24 @@ import itertools
 class FMTL():
     
     """
-    A field-mappable tuple list
+    Poor man's pandas (PMSP) 
     Each field's atomic unit can be mapped to a value. 
     """
 
-    def __init__(self, tuplelist,rows=None):
+    def __init__(self, tuplelist,rows=None, checks=None):
         if isinstance(rows,list) or isinstance(rows,tuple):
             rows = {x:i for i,x in enumerate(rows)}
 
-        self.tuplelist = tuplelist
+        self.rows = rows
+        
+        if checks is not None:
+             self.tuplelist = list(checks(x) for x in tuplelist)
+        else:
+            self.tuplelist = list(tuplelist)
+
         self.mappings = {}
         self.unknown = {}
-        self.rows = rows
-       
+        
     def __len__(self):
         return len(self.tuplelist)
 
@@ -51,13 +56,10 @@ class FMTL():
     def __iter__(self):
         self.iter_idxs = range(len(self.tuplelist)).__iter__()
         return self
-    
-    def indexed_iter(self,idxs):
-        self.iter_idxs = range(len(self.tuplelist)).__iter__()
-        return self
 
     def __next__(self):
         return self[self.iter_idxs.__next__()]
+
 
     def _f2i(self,field):
         if type(field) == int:
@@ -105,6 +107,12 @@ class FMTL():
 
         for idx in key_iter:
             yield self[idx][field]
+    
+    def indexed_iter(self,idxs):
+        """
+        returns a FMTL_iterator object which is the same FMTL instance which only iterates on the idxs slice.
+        """
+        return FMTL_iterator(self,idxs)
 
     def get_stats(self, field, key_iter=None, verbose=False):
         """
@@ -139,3 +147,26 @@ class FMTL():
     
         d2k = {c:i for i,c in enumerate(d_keys,offset)}
         return d2k
+
+
+class FMTL_iterator():		
+    """
+    Simple indexed iterator on FMTL
+    """
+    def __init__(self, fmtl, idxs):
+        self.fmtl = fmtl
+        self.idxs = idxs
+
+    def __getitem__(self, i):
+        return self.fmtl[self.idxs[i]]
+
+    def __len__(self):
+        return len(self.idxs)
+
+    def __iter__(self):
+        self.iter_idx = self.idxs.__iter__()
+        return self
+
+    def __next__(self):
+        idx = self.iter_idx.__next__()
+        return self.fmtl[idx]
