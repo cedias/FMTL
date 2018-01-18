@@ -29,9 +29,7 @@ fmtl.set_mapping("num",lambda x:x*2)
 ```
 
 You can provide dictionnaries as mapping an the `__get_item__()` function will be automatically used.
-The `get_field_dict(...)` method can be used to get such mapping. 
 ```python
-map = fmtl.get_field_dict("id") # Creates mapping on id field (returns dict())
 fmtl.set_mapping("id", map)  #sets it
 ```
 Mapping is done as iteration time in the object's `__get_item__()` method.
