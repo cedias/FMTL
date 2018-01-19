@@ -1,6 +1,7 @@
 # FMTL: a Field-Mappable Tuple List
 
 FMTL provides a basic way to make data transformations on Python 3(.6) tuple lists without pre-established dependencies.
+At its core, **FMTL** is plain simple (~100 loc). The idea is to ease dataset creation and replace standard data transformation boilerplate code. 
 
 ## Install:
 via pip: `pip install -e git+https://github.com/cedias/FMTL.git`
